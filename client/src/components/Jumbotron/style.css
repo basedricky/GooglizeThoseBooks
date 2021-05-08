@@ -1,0 +1,7 @@
+  
+.jumbotron {
+    background-image: url("../../utils/images/library.jpg");
+    background-size: cover;
+    height: 500px;
+    background-position: center;
+}
