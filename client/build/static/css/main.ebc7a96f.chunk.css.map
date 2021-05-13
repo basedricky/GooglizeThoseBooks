@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AACA,QACI,wBAAyB,CACzB,kBACJ,CAHA,WACI,wDAAuD,CACvD,qBAAsB,CACtB,YAAa,CACb,uBACJ","file":"main.ebc7a96f.chunk.css","sourcesContent":["  \r\n.jumbotron {\r\n    background-image: url(\"../../utils/images/library.jpg\");\r\n    background-size: cover;\r\n    height: 500px;\r\n    background-position: center;\r\n}"]}
