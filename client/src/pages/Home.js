@@ -6,52 +6,44 @@ import { Input, SubmitBtn } from "../components/Search/index";
 import API from "../utils/API";
 import ResultList from "../components/ResultList/index";
 
-export default function Home() {
-    // Setting our component's initial state
-    const [books, setBooks] = useState([])
-    const [search, setSearch] = useState({})
+class Home extends Component {
 
-    // Load all books and store them with setBooks
-    useEffect(() => {
-        loadBooks()
-    }, [])
-
-    // function to search for books
-
-    function searchBooks() {
-        API.googleBooks()
-            .then(res =>
-                setSearch(res.data.items),
-                setBooks(res.data.items)
-            )
-            .catch(err => console.log(err));
-    }
-
-    // Loads all books and sets them to books
-    function loadBooks() {
-        API.getBooks()
-            .then(res =>
-                setBooks(res.data)
-            )
-            .catch(err => console.log(err));
+    state = {
+        books: [],
+        search: ""
     };
 
 
-    // Handles updating component state when the user types into the input field
-    function handleInputChange(event) {
+    // Create function to search for books through Google API
+    searchBooks = () => {
+        API.googleBooks(this.state.search)
+            .then(res => {
+                console.log("This is res.data", res.data.items)
+                this.setState({
+                    books: res.data.items,
+                    search: ""
+                })
+            })
+            .catch(err => console.log(err));
+
+    };
+
+    // Create function to handle input data
+    handleInputChange = event => {
         const { name, value } = event.target;
-        setFormObject({ ...formObject, [name]: value })
+        this.setState({
+            [name]: value
+        });
     };
 
-    // When the form is submitted, use the API.saveBook method to save the book data
-    // Then reload books from the database
-    function handleFormSubmit(event) {
+    // Create function to handle form data submission
+    handleFormSubmit = event => {
         event.preventDefault();
         this.searchBooks();
     };
 
     saveGoogleBook = currentBook => {
-        console.log("this is the book", currentBook);
+        console.log("This is the current book", currentBook);
         API.saveBook({
             id: currentBook.id,
             title: currentBook.title,
@@ -60,40 +52,43 @@ export default function Home() {
             image: currentBook.image,
             link: currentBook.link
         })
-            .then(res => console.log("Posted to the DB:", res))
-            .catch(err => console.log("Warning Error:", err));
-
+            .then(res => console.log("Successful POST to DB!", res))
+            .catch(err => console.log("this is the error", err));
     }
 
-    return (
+    render() {
+        return (
+            <div>
+                <Nav />
+                <Container fluid>
+                    <Jumbotron />
+                    <form>
+                        <h5>Search for books</h5>
+                        <Input
+                            value={this.state.search}
+                            onChange={this.handleInputChange}
+                            name="search"
+                            placeholder="e.g. Harry Potter"
+                        />
+                        <SubmitBtn onClick={this.handleFormSubmit} />
+                    </form>
 
-        <div>
-            <Nav />
-            <Container fluid>
-                <Jumbotron />
-                <form>
-                    <h5>Search for books</h5>
-                    <Input
-                        value={search}
-                        onChange={handleInputChange}
-                        name="search"
-                        placeholder="e.g. Animorphs"
-                    />
-                    <SubmitBtn onClick={handleFormSubmit} />
-                </form>
-                {this.state.books.length ? (
-                    <ResultList
-                        bookState={this.state.books}
-                        saveGoogleBook={this.saveGoogleBook}>
-                    </ResultList>
-                ) : (
-                    <div>
-                        <hr />
-                        <p style={{ fontStyle: "italic" }}>No results to display</p>
-                    </div>
+                    {this.state.books.length ? (
+                        <ResultList
+                            bookState={this.state.books}
+                            saveGoogleBook={this.saveGoogleBook}>
+                        </ResultList>
+                    ) : (
+                        <div>
+                            <hr />
+                            <p style={{ fontStyle: "italic" }}>No results to display</p>
+                        </div>
+                    )}
 
-                )}
-            </Container>
-        </div>
-    )
+                </Container>
+            </div>
+        )
+    }
 }
+
+export default Home

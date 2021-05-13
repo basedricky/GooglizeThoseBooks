@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SavedListItem from "../SavedListItem/SavedListItem";
+import SavedListItem from "../SavedListItem/index";
 
 export default class index extends Component {
 

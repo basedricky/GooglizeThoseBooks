@@ -52,8 +52,8 @@ export default class Saved extends Component {
             >
             </SavedList>
           ) : (
-          
-        )}
+            <h5>No Results Found!</h5>
+          )}
         </Container>
       </div>
     )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ResultListItem from "../ResultListItem/ResultListItem"
+import ResultListItem from "../ResultListItem/index"
 
 export default class ResultList extends Component {
     render() {
@@ -22,4 +22,3 @@ export default class ResultList extends Component {
     }
 }
 
-export default ResultList
