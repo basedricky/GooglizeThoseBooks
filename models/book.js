@@ -23,8 +23,8 @@ const bookSchema = new Schema({
   image: {
     type: String,
     unique: true,
-    dropDups: true
   },
+
   link: {
     type: String,
     required: true
